@@ -1,0 +1,572 @@
+/* App.css - Custom styles for the Insulin Predictor app */
+
+/* Remove all default styles that might interfere */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Auth Page Container */
+.auth-container {
+  min-height: 100vh;
+  background-color: #111827;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Centered Content Wrapper */
+.auth-content-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Card Container */
+.auth-card-container {
+  width: 100%;
+  max-width: 28rem;
+}
+
+/* White Card */
+.auth-card {
+  background-color: white;
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+}
+
+/* Card Header */
+.auth-card-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.auth-card-subtitle {
+  font-size: 1.125rem;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+  text-align: left;
+}
+
+.auth-card-description {
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+/* Form Styles */
+.auth-form {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.form-input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* Button Styles */
+.btn-primary {
+  width: 100%;
+  background-color: #4b5563;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #374151;
+}
+
+.btn-primary:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+/* Alternative Sign In Options */
+.auth-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-option-btn {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-option-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.auth-option-icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.auth-option-text {
+  font-size: 0.875rem;
+}
+
+/* Error Message */
+.error-message {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+/* Footer Links */
+.auth-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-footer-text {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hamburger-icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.hamburger-line {
+  width: 1.5rem;
+  height: 0.125rem;
+  background-color: white;
+}
+
+/* Particle Background */
+.particle-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-card-title {
+    font-size: 1.5rem;
+  }
+  
+  .auth-card {
+    padding: 1.5rem;
+  }
+}
+
+/* ===== PREDICTION PAGE STYLES ===== */
+
+/* Prediction Container */
+.prediction-container {
+  min-height: 100vh;
+  background-color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+}
+
+/* Prediction Content Wrapper */
+.prediction-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 64rem;
+}
+
+/* Header Section */
+.prediction-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.prediction-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.prediction-icon {
+  width: 2rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+
+.prediction-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #1e3a8a;
+}
+
+.prediction-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+.prediction-subtitle {
+  color: #bfdbfe;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* User Info Bar */
+.user-info-bar {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.user-welcome {
+  color: #bfdbfe;
+  font-size: 0.875rem;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #bfdbfe;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover {
+  color: white;
+}
+
+/* Main Card */
+.prediction-card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+}
+
+.prediction-card-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+/* Input Section */
+.input-section {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.sequence-textarea {
+  width: 100%;
+  height: 10rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1f2937;
+  resize: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+}
+
+.sequence-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sequence-textarea:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.divider {
+  text-align: center;
+  color: #6b7280;
+  font-weight: 500;
+  margin: 1.5rem 0;
+}
+
+/* Predict Button */
+.predict-btn-wrapper {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.predict-btn {
+  background-color: #4b5563;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.predict-btn:hover {
+  background-color: #374151;
+}
+
+.predict-btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Results Section */
+.results-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.results-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.result-item {
+  margin-bottom: 1rem;
+}
+
+.result-label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.result-value-large {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.result-value-medium {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.result-value-normal {
+  font-size: 1.125rem;
+  color: #4b5563;
+}
+
+.risk-high { color: #dc2626; }
+.risk-medium { color: #d97706; }
+.risk-low { color: #16a34a; }
+
+.composition-list {
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+/* Footer */
+.prediction-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.prediction-footer-text {
+  color: #bfdbfe;
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .prediction-title {
+    font-size: 2rem;
+  }
+  
+  .prediction-subtitle {
+    font-size: 1rem;
+  }
+  
+  .prediction-card {
+    padding: 1.5rem;
+  }
+  
+  .prediction-card-title {
+    font-size: 1.5rem;
+  }
+  
+  .sequence-textarea {
+    height: 8rem;
+  }
+  
+  .result-value-large {
+    font-size: 1.875rem;
+  }
+  
+  .result-value-medium {
+    font-size: 1.25rem;
+  }
+}
+
+/* Ensure no conflicting styles */
+.logo,
+.card,
+.read-the-docs {
+  display: none;
+}
