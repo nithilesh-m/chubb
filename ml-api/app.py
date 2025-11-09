@@ -52,25 +52,25 @@ def load_model():
         # Load damage detection model
         if os.path.exists(MODEL_PATH):
             model = keras.models.load_model(MODEL_PATH)
-            print(f"✅ Damage model loaded successfully from {MODEL_PATH}")
-            print(f"📊 Model input shape: {model.input_shape}")
-            print(f"📊 Model output shape: {model.output_shape}")
+            print(f"Damage model loaded successfully from {MODEL_PATH}")
+            print(f"Model input shape: {model.input_shape}")
+            print(f"Model output shape: {model.output_shape}")
         else:
-            print(f"⚠️  Damage model file not found: {MODEL_PATH}")
-            print("⚠️  Using mock predictions for damage detection")
+            print(f"Damage model file not found: {MODEL_PATH}")
+            print("Using mock predictions for damage detection")
         
         # Load part detection model (EfficientNet)
         if os.path.exists(PART_MODEL_PATH):
             part_model = keras.models.load_model(PART_MODEL_PATH)
-            print(f"✅ Part model loaded successfully from {PART_MODEL_PATH}")
-            print(f"📊 Part model input shape: {part_model.input_shape}")
-            print(f"📊 Part model output shape: {part_model.output_shape}")
+            print(f"Part model loaded successfully from {PART_MODEL_PATH}")
+            print(f"Part model input shape: {part_model.input_shape}")
+            print(f"Part model output shape: {part_model.output_shape}")
         else:
-            print(f"⚠️  Part model file not found: {PART_MODEL_PATH}")
-            print("⚠️  Using mock predictions for part detection")
+            print(f"Part model file not found: {PART_MODEL_PATH}")
+            print("Using mock predictions for part detection")
     except Exception as e:
-        print(f"❌ Error loading models: {str(e)}")
-        print("⚠️  Using mock predictions")
+        print(f"Error loading models: {str(e)}")
+        print("Using mock predictions")
 
 def preprocess_image(image_bytes, target_size=(224, 224)):
     """
@@ -229,7 +229,7 @@ def predict():
         return jsonify(result)
     
     except Exception as e:
-        print(f"❌ Prediction error: {str(e)}")
+        print(f"Prediction error: {str(e)}")
         return jsonify({
             'success': False,
             'error': str(e)
@@ -302,18 +302,18 @@ def predict_part():
         return jsonify(result)
     
     except Exception as e:
-        print(f"❌ Part prediction error: {str(e)}")
+        print(f"Part prediction error: {str(e)}")
         return jsonify({
             'success': False,
             'error': str(e)
         }), 500
 
 if __name__ == '__main__':
-    print("🚀 Starting Flask ML API...")
-    print(f"📍 Damage model path: {MODEL_PATH}")
-    print(f"📍 Part model path: {PART_MODEL_PATH}")
-    print(f"📍 Damage model exists: {os.path.exists(MODEL_PATH)}")
-    print(f"📍 Part model exists: {os.path.exists(PART_MODEL_PATH)}")
+    print("Starting Flask ML API...")
+    print(f"Damage model path: {MODEL_PATH}")
+    print(f"Part model path: {PART_MODEL_PATH}")
+    print(f"Damage model exists: {os.path.exists(MODEL_PATH)}")
+    print(f"Part model exists: {os.path.exists(PART_MODEL_PATH)}")
     load_model()
-    print("🌐 Starting server on http://localhost:5001")
+    print("Starting server on http://localhost:5001")
     app.run(host='0.0.0.0', port=5001, debug=True)
