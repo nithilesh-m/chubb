@@ -174,7 +174,7 @@ function SignUp() {
             {/* Sign In Option */}
             <div className="auth-footer">
               <span className="auth-footer-text">Already have an account?</span>
-              <button onClick={() => navigate('/')} className="btn-secondary">
+              <button onClick={() => navigate('/signin')} className="btn-secondary">
                 Sign In
               </button>
             </div>

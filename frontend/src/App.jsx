@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import HomePage from './components/HomePage'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Prediction from './components/Prediction'
@@ -12,7 +13,7 @@ function Logout() {
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('username')
     localStorage.removeItem('token')
-    navigate('/signin')
+    navigate('/')
   }, [navigate])
   return null
 }
@@ -26,7 +27,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isAuthenticated ? <Navigate to="/prediction" /> : <SignIn />} 
+            element={isAuthenticated ? <Navigate to="/prediction" /> : <HomePage />} 
           />
           <Route
             path="/signin"

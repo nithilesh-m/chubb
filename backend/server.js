@@ -12,22 +12,23 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 const allowedOrigins = [
-  'http://localhost:5173',                   // local dev
-  'https://chubb-nu.vercel.app',             // your Vercel frontend
+  'http://localhost:5173',
+  'https://chubb-nu.vercel.app',
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.log("❌ Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
