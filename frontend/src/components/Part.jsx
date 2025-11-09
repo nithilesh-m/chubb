@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import DashboardLayout from './DashboardLayout'
 
 function Part() {
   const navigate = useNavigate()
@@ -12,7 +13,6 @@ function Part() {
   const damageResult = location.state?.damageResult
 
   useEffect(() => {
-    // If no image data, redirect back
     if (!imagePreview) {
       navigate('/prediction')
     }
@@ -23,14 +23,12 @@ function Part() {
     setError('')
 
     try {
-      // Convert base64 to blob
       const response = await fetch(imagePreview)
       const blob = await response.blob()
 
       const formData = new FormData()
       formData.append('image', blob, 'car-image.jpg')
 
-      // Call backend API for part detection
       const apiResponse = await fetch('http://localhost:5000/api/images/detect-part', {
         method: 'POST',
         headers: {
@@ -59,11 +57,9 @@ function Part() {
 
   const handleDownloadPDF = async () => {
     try {
-      // Dynamic import of jsPDF
       const { jsPDF } = await import('jspdf')
       const doc = new jsPDF()
       
-      // Set font
       doc.setFont('helvetica')
       
       // Header
@@ -75,10 +71,7 @@ function Part() {
       doc.setFontSize(12)
       doc.text('Vehicle Damage Assessment Report', 105, 30, { align: 'center' })
       
-      // Reset text color
       doc.setTextColor(0, 0, 0)
-      
-      // Report Info
       doc.setFontSize(10)
       doc.text(`Report Date: ${new Date().toLocaleDateString()}`, 20, 50)
       doc.text(`Report Time: ${new Date().toLocaleTimeString()}`, 20, 56)
@@ -107,7 +100,6 @@ function Part() {
         doc.text(`Damaged Part: ${partResult.damagedPart}`, 20, 120)
         doc.text(`Confidence: ${partResult.confidence}%`, 20, 127)
         
-        // All Predictions
         doc.setFontSize(14)
         doc.setTextColor(59, 130, 246)
         doc.text('All Part Predictions:', 20, 145)
@@ -118,7 +110,7 @@ function Part() {
         if (partResult.allPredictions) {
           const sortedPredictions = Object.entries(partResult.allPredictions)
             .sort((a, b) => parseFloat(b[1]) - parseFloat(a[1]))
-            .slice(0, 10) // Top 10
+            .slice(0, 10)
           
           sortedPredictions.forEach(([part, confidence]) => {
             doc.text(`${part}: ${confidence}%`, 25, yPos)
@@ -127,7 +119,6 @@ function Part() {
         }
       }
       
-      // Add image if available
       if (imagePreview) {
         try {
           doc.addPage()
@@ -140,7 +131,6 @@ function Part() {
         }
       }
       
-      // Footer
       const pageCount = doc.internal.getNumberOfPages()
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i)
@@ -150,7 +140,6 @@ function Part() {
         doc.text('Group 301 - Confidential Report', 105, 285, { align: 'center' })
       }
       
-      // Save PDF
       const fileName = `Damage_Report_${new Date().getTime()}.pdf`
       doc.save(fileName)
       
@@ -161,49 +150,52 @@ function Part() {
   }
 
   return (
-    <div className="prediction-page">
-      <div className="particles-bg"></div>
-      
-      <div className="prediction-container">
-        
-
-        {/* Main Card */}
-        <div className="prediction-card">
-          <h2 className="prediction-card-title">Detect Damaged Part</h2>
-          
-          {/* Previous Result Summary */}
-          {damageResult && (
-            <div className="previous-result-summary">
-              <div className="summary-badge damaged">
-                <svg style={{ width: '1.5rem', height: '1.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <DashboardLayout>
+      <div className="part-module">
+        {/* Previous Result Summary */}
+        {damageResult && (
+          <div className="summary-banner">
+            <div className="summary-content">
+              <div className="summary-icon">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <span>Vehicle Damage Detected ({damageResult.confidence}% confidence)</span>
+              </div>
+              <div className="summary-text">
+                <h3>Vehicle Damage Detected</h3>
+                <p>Confidence: {damageResult.confidence}%</p>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Main Card */}
+        <div className="module-card">
+          <div className="card-header">
+            <h2 className="card-title">Detect Damaged Part</h2>
+            <p className="card-subtitle">Identify the specific part of the vehicle that is damaged</p>
+          </div>
 
           {/* Image Display */}
           {imagePreview && (
-            <div className="part-image-section">
-              <label className="input-label">Uploaded Image</label>
-              <div className="image-preview-container">
-                <img src={imagePreview} alt="Car" className="image-preview" />
+            <div className="image-display-section">
+              <div className="image-container">
+                <img src={imagePreview} alt="Car" className="display-image" />
               </div>
             </div>
           )}
 
-          {/* Detect Part Button */}
+          {/* Detect Button */}
           {!partResult && (
-            <div className="predict-btn-wrapper">
+            <div className="card-actions">
               <button
                 onClick={handleDetectPart}
                 disabled={loading}
-                className="predict-btn"
+                className="btn-primary btn-large"
               >
                 {loading ? (
                   <>
-                    <svg className="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="spinner" width="20" height="20" viewBox="0 0 24 24">
                       <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -211,7 +203,7 @@ function Part() {
                   </>
                 ) : (
                   <>
-                    <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     Detect Damaged Part
@@ -223,49 +215,47 @@ function Part() {
 
           {/* Error Message */}
           {error && (
-            <div className="error-message">
-              <p className="error-text">{error}</p>
+            <div className="alert alert-error">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+              <span>{error}</span>
             </div>
           )}
 
           {/* Part Detection Results */}
           {partResult && (
-            <div className="results-container">
-              <h3 className="results-title">Part Detection Results</h3>
-              
-              {/* Main Result Banner */}
-              <div className="part-result-banner">
-                <div className="part-icon">
-                  <svg style={{ width: '3rem', height: '3rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="results-section">
+              <div className="result-banner result-part">
+                <div className="result-icon">
+                  <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
-                <div className="part-result-text">
-                  <h2>{partResult.damagedPart}</h2>
-                  <p style={{ color: '#d1d5db', fontWeight: '600' }}>
-                    Confidence: {partResult.confidence}%
-                  </p>
+                <div className="result-content">
+                  <h3 className="result-title">{partResult.damagedPart}</h3>
+                  <p className="result-confidence">Confidence: {partResult.confidence}%</p>
                 </div>
               </div>
 
               {/* Detailed Predictions */}
               {partResult.allPredictions && (
-                <div className="predictions-detail">
-                  <h4>All Detected Parts:</h4>
-                  <div className="predictions-bars">
+                <div className="analysis-section">
+                  <h4 className="analysis-title">All Detected Parts</h4>
+                  <div className="prediction-bars">
                     {Object.entries(partResult.allPredictions)
                       .sort((a, b) => parseFloat(b[1]) - parseFloat(a[1]))
                       .map(([partName, confidence]) => (
-                        <div key={partName} className="prediction-bar-item">
-                          <div className="prediction-bar-header">
-                            <span className="prediction-class">{partName}</span>
-                            <span className="prediction-confidence">{confidence}%</span>
+                        <div key={partName} className="prediction-bar">
+                          <div className="bar-header">
+                            <span className="bar-label">{partName}</span>
+                            <span className="bar-value">{confidence}%</span>
                           </div>
-                          <div className="prediction-bar-bg">
+                          <div className="bar-container">
                             <div 
-                              className="prediction-bar-fill"
+                              className="bar-fill bar-info"
                               style={{ width: `${confidence}%` }}
-                            ></div>
+                            />
                           </div>
                         </div>
                       ))}
@@ -273,26 +263,16 @@ function Part() {
                 </div>
               )}
 
-              {/* Note if using fallback */}
-              {partResult.note && (
-                <div className="prediction-note">
-                  <svg style={{ width: '1rem', height: '1rem' }} fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  <span>{partResult.note}</span>
-                </div>
-              )}
-
               {/* Action Buttons */}
-              <div className="part-action-buttons">
-                <button onClick={handleBack} className="secondary-btn">
-                  <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="action-buttons">
+                <button onClick={handleBack} className="btn-outline btn-large">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
                   Back to Upload
                 </button>
-                <button onClick={handleDownloadPDF} className="print-report-btn">
-                  <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button onClick={handleDownloadPDF} className="btn-success btn-large">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   Download PDF Report
@@ -301,11 +281,8 @@ function Part() {
             </div>
           )}
         </div>
-
-        
-        
       </div>
-    </div>
+    </DashboardLayout>
   )
 }
 
