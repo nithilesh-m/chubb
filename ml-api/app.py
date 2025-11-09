@@ -315,5 +315,7 @@ if __name__ == '__main__':
     print(f"Damage model exists: {os.path.exists(MODEL_PATH)}")
     print(f"Part model exists: {os.path.exists(PART_MODEL_PATH)}")
     load_model()
-    print("Starting server on http://localhost:5001")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+
+    port = int(os.environ.get("PORT", 5001))
+    print(f"Starting server on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=False)
